@@ -16,7 +16,7 @@ public:
     
     bool IsMyAddress(int address);
     bool IsBcastAddress(int address);
-    bool IsMyOrBroadcast(int address);
+    bool IsMyOrBcast(int address);
 
     void Loop();
     

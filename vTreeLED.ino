@@ -75,15 +75,6 @@ void loop()
 
     cmdProc.Loop();
 
-    pctrl.readSensors();
-
-	if ( millis() - oneSecondCounter > oneSecondInterval) {
-		oneSecondCounter = millis();
-		// Things to do at a one-second interval. 
-		toggleLed();
-        pctrl.Loop();
-	}
-
     delay(1);
 
     loopCtr++;
