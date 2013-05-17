@@ -1,3 +1,4 @@
+#include <EEPROM.h>
 #include "Arduino.h"
 #include "vTreeLEDControl.h"
 
@@ -5,6 +6,10 @@
 	
 */
 vTreeLEDControl::vTreeLEDControl() {
+
+    // Initialize this in the constructor of the class.
+    myAddr = 0;
+    myAddr = EEPROM.read(0);
 
     //May as well have it start fully on.
     redValue = 255;
@@ -48,4 +53,14 @@ void vTreeLEDControl::setBlueValue(int value){
     //int blueValue = -1;
     //blueValue = value;
     analogWrite(vTreeLEDControl::bluePin, value);
+}
+
+bool vTreeLEDControl::IsMyAddress(uint8_t address) {
+    return(address == myAddr);
+}
+bool vTreeLEDControl::IsBcastAddress(uint8_t address){
+    return(address == 0);
+}
+bool vTreeLEDControl::IsMyOrBcast(uint8_t address){
+    return(IsMyAddress(address) || IsBcastAddress(address));
 }

@@ -1,6 +1,5 @@
 
 #include <string.h>
-#include <EEPROM.h>
 #include "vTreeLEDCmdProcessor.h"
 #include "vTreeLEDControl.h"
 
@@ -9,10 +8,6 @@ static char buffer[1024];
 vTreeLEDCmdProcessor::vTreeLEDCmdProcessor(vTreeLEDControl* pc) : CmdProcessor()
 {
     _pPC = pc;
-    
-    // Initialize this in the constructor of the class.
-    myAddr = 0;  
-    myAddr = EEPROM.read(0);
 
 }
 
@@ -20,15 +15,6 @@ vTreeLEDCmdProcessor::~vTreeLEDCmdProcessor()
 {
 }
 
-bool vTreeLEDCmdProcessor::IsMyAddress(uint8_t address) {
-    return(address == myAddr);
-}
-bool vTreeLEDCmdProcessor::IsBcastAddress(uint8_t address){
-    return(address == 0);
-}
-bool vTreeLEDCmdProcessor::IsMyOrBcast(uint8_t address){
-    return(IsMyAddress(address) || IsBcastAddress(address));
-}
 
 void vTreeLEDCmdProcessor::Loop()
 {
@@ -66,7 +52,7 @@ void vTreeLEDCmdProcessor::Loop()
                     getParam(1,redValue);
                     getParam(2,greenValue);
                     getParam(3,blueValue);
-                    if ( IsMyOrBcast(address)){
+                    if ( _pPC->IsMyOrBcast(address)){
                         _pPC->setRedValue(redValue);
                         _pPC->setGreenValue(greenValue);
                         _pPC->setBlueValue(blueValue);

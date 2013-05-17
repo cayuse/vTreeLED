@@ -9,6 +9,8 @@ public:
     static const int greenPin = 15;
     static const int bluePin = 14;
 
+    uint8_t  myAddr;
+
     // We will eventually need a pin for reading the IR.
 //    static const int IRPin = 2;
 
@@ -16,6 +18,7 @@ public:
     int greenValue;
     int blueValue;
     int intensityValue;
+
 
 
 public:
@@ -28,6 +31,10 @@ public:
     void setRedValue(int value);
     void setGreenValue(int value);
     void setBlueValue(int value);
+
+    bool IsMyAddress(uint8_t address);
+    bool IsBcastAddress(uint8_t address);
+    bool IsMyOrBcast(uint8_t address);
 };
 
 #endif
