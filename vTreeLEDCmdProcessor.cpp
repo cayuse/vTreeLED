@@ -119,7 +119,6 @@ void vTreeLEDCmdProcessor::Loop()
 // This command is accepted by address or broadcast.
 // This command does not require a short command name.
 // This command talks back on success or failure.
-// TODO fix why the hell i can't print a uint8_t in the meantime i don't care much.
             } else if(strcmp(pCmd,"setAddress") == 0) {
                 uint8_t oldAddress = 0;
                 uint8_t address = 0;
