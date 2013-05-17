@@ -92,7 +92,6 @@ void vTreeLEDCmdProcessor::Loop()
                 if (paramCnt() == 2) {
                     getParam(0,address);
                     getParam(2,greenValue);
-                    getParam(3,blueValue);
                     if ( _pPC->IsMyOrBcast(address)){
                         _pPC->setGreenValue(greenValue);
                     }
@@ -120,7 +119,7 @@ void vTreeLEDCmdProcessor::Loop()
 // This command is accepted by address or broadcast.
 // This command does not require a short command name.
 // This command talks back on success or failure.
-
+// TODO fix why the hell i can't print a uint8_t in the meantime i don't care much.
             } else if(strcmp(pCmd,"setAddress") == 0) {
                 uint8_t oldAddress = 0;
                 uint8_t address = 0;
@@ -131,7 +130,7 @@ void vTreeLEDCmdProcessor::Loop()
                     if ( _pPC->IsMyOrBcast(address)){
                         oldAddress = _pPC->myAddr;
                         _pPC->setAddress(newAddress);
-                        _pHW->print("Address Changed from: %d: to %d\n",oldAddress, newAddress);
+                        //_pHW->print("Address Changed from: %d: to %d\n",oldAddress, newAddress);
                     }
                 } else {
                     _pHW->print("Fail:setAddress requires exactly 2 arguments: oldAddress(bCast ok) + newAddress\n");
