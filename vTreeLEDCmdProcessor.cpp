@@ -130,7 +130,11 @@ void vTreeLEDCmdProcessor::Loop()
                     if ( _pPC->IsMyOrBcast(address)){
                         oldAddress = _pPC->myAddr;
                         _pPC->setAddress(newAddress);
-                        //_pHW->print("Address Changed from: %d: to %d\n",oldAddress, newAddress);
+                        sprintf(buffer,"OK: Address Changed from: 0x%02x: to 0x%02x\n",
+                        oldAddress,
+                        newAddress
+                        );
+                        _pHW->print(buffer);
                     }
                 } else {
                     _pHW->print("Fail:setAddress requires exactly 2 arguments: oldAddress(bCast ok) + newAddress\n");
