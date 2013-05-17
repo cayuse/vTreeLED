@@ -37,6 +37,10 @@ vTreeLEDControl::vTreeLEDControl() {
 
 vTreeLEDControl::~vTreeLEDControl() {}
 
+void vTreeLEDControl::setAddress(uint8_t address){
+    myAddr = address;
+    EEPROM.write(0,address);
+}
 void vTreeLEDControl::setRedValue(int value){
     //int redValue = -1;
     //redValue = value;
