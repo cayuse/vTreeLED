@@ -7,6 +7,7 @@
 
 class vTreeLEDCmdProcessor : public CmdProcessor
 {
+    uint8_t  myAddr;
 
     vTreeLEDControl* _pPC;
 
@@ -14,9 +15,9 @@ public:
     vTreeLEDCmdProcessor(vTreeLEDControl* vTreeLEDCtrl);
     ~vTreeLEDCmdProcessor();
     
-    bool IsMyAddress(int address);
-    bool IsBcastAddress(int address);
-    bool IsMyOrBcast(int address);
+    bool IsMyAddress(uint8_t address);
+    bool IsBcastAddress(uint8_t address);
+    bool IsMyOrBcast(uint8_t address);
 
     void Loop();
     

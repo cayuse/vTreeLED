@@ -6,7 +6,6 @@
 
 vTreeLEDControl pctrl = vTreeLEDControl();
 vTreeLEDCmdProcessor cmdProc = vTreeLEDCmdProcessor(&pctrl);
-HardwareSerial Uart = HardwareSerial();
 
 int statusLed = 11;
 int errorLed = 11;
@@ -46,10 +45,11 @@ void setup() {
         EEPROM.write(0,address);
     }
 
-    Uart.begin(9600);
+    Serial.begin(9600);
+    //Uart.begin(9600);
 
     //Serial.setTimeout(1000);
-    cmdProc.setSerial(Uart);
+    cmdProc.setSerial(Serial);
     
 	pinMode(statusLed,OUTPUT);
 	uint8_t u_addr = EEPROM.read(0);

@@ -25,9 +25,9 @@ public:
     void Loop(); // Call periodically, about once a second
 
 
-void setRedValue(int value);
-void setGreenValue(int value);
-void setBlueValue(int value);
+    void setRedValue(int value);
+    void setGreenValue(int value);
+    void setBlueValue(int value);
 };
 
 #endif

@@ -32,20 +32,20 @@ vTreeLEDControl::vTreeLEDControl() {
 
 vTreeLEDControl::~vTreeLEDControl() {}
 
-void setRedValue(int value){
-    int redValue = -1;
-    redValue = value;
-    analogWrite(vTreeLEDControl::redPin, redValue);
+void vTreeLEDControl::setRedValue(int value){
+    //int redValue = -1;
+    //redValue = value;
+    analogWrite(vTreeLEDControl::redPin, value);
 }
 
-void setGreenValue(int value){
-    int greenValue = -1;
-    greenValue = value;
-    analogWrite(vTreeLEDControl::greenPin, greenValue);
+void vTreeLEDControl::setGreenValue(int value){
+    //int greenValue = -1;
+    //greenValue = value;
+    analogWrite(vTreeLEDControl::greenPin, value);
 }
 
-void setBlueValue(int value){
-    int blueValue = -1;
-    blueValue = value;
-    analogWrite(vTreeLEDControl::bluePin, blueValue);
+void vTreeLEDControl::setBlueValue(int value){
+    //int blueValue = -1;
+    //blueValue = value;
+    analogWrite(vTreeLEDControl::bluePin, value);
 }

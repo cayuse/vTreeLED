@@ -9,21 +9,24 @@ static char buffer[1024];
 vTreeLEDCmdProcessor::vTreeLEDCmdProcessor(vTreeLEDControl* pc) : CmdProcessor()
 {
     _pPC = pc;
+    
+    // Initialize this in the constructor of the class.
+    myAddr = 0;  
+    myAddr = EEPROM.read(0);
+
 }
 
 vTreeLEDCmdProcessor::~vTreeLEDCmdProcessor()
 {
 }
 
-bool IsMyAddress(int address) {
-    int myAddress = 0;  
-    myAddress = EEPROM.read(0);
-    return(address == myAddress);
+bool vTreeLEDCmdProcessor::IsMyAddress(uint8_t address) {
+    return(address == myAddr);
 }
-bool IsBcastAddress(int address){
+bool vTreeLEDCmdProcessor::IsBcastAddress(uint8_t address){
     return(address == 0);
 }
-bool IsMyOrBcast(int address){
+bool vTreeLEDCmdProcessor::IsMyOrBcast(uint8_t address){
     return(IsMyAddress(address) || IsBcastAddress(address));
 }
 
@@ -54,7 +57,7 @@ void vTreeLEDCmdProcessor::Loop()
 // TODO get rid of the talking back on the ELSE
 
             } else if(strcmp(pCmd,"setRGB") == 0) {
-                int address = -1;
+                uint8_t address = -1;
                 int redValue = -1;
                 int greenValue = -1;
                 int blueValue = -1;
@@ -63,7 +66,7 @@ void vTreeLEDCmdProcessor::Loop()
                     getParam(1,redValue);
                     getParam(2,greenValue);
                     getParam(3,blueValue);
-                    if ( IsMyOrBroadcast(address)){
+                    if ( IsMyOrBcast(address)){
                         _pPC->setRedValue(redValue);
                         _pPC->setGreenValue(greenValue);
                         _pPC->setBlueValue(blueValue);
