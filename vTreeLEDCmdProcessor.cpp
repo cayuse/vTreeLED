@@ -30,14 +30,14 @@ void vTreeLEDCmdProcessor::Loop()
 //This command responds always and with the following information. It should also include address.
 //But i have to go so I can't do that right atm.
             if (strcmp(pCmd,"status") == 0) {
-                  sprintf(buffer,"Ok:Address: %d Red:%d Green:%d Blue:%d Intensity:%d\n",
+                  sprintf(buffer,"Ok:Address: %d Red:%d Green:%d Blue:%d Intensity:%d",
                     _pPC->myAddr,
                     _pPC->redValue,
                     _pPC->greenValue,
                     _pPC->blueValue,
                     _pPC->intensityValue
                     );
-                _pHW->print(buffer);
+                _pHW->println(buffer);
 
 // This command sets RGB values for lights
 // This command is accepted by address or broadcast.
@@ -61,7 +61,7 @@ void vTreeLEDCmdProcessor::Loop()
                         _pPC->setBlueValue(blueValue);
                     }
                 } else {
-                    _pHW->print("Fail:setRGB Requires an address plus 3 values 0-255\n");
+                    _pHW->println("Fail:setRGB Requires an address plus 3 values 0-255");
                 }
 // This command sets Red value
 // This command is accepted by address or broadcast.
@@ -91,7 +91,7 @@ void vTreeLEDCmdProcessor::Loop()
                 int greenValue = -1;
                 if (paramCnt() == 2) {
                     getParam(0,address);
-                    getParam(2,greenValue);
+                    getParam(1,greenValue);
                     if ( _pPC->IsMyOrBcast(address)){
                         _pPC->setGreenValue(greenValue);
                     }
@@ -108,7 +108,7 @@ void vTreeLEDCmdProcessor::Loop()
                 int blueValue = -1;
                 if (paramCnt() == 2) {
                     getParam(0,address);
-                    getParam(3,blueValue);
+                    getParam(1,blueValue);
                     if ( _pPC->IsMyOrBcast(address)){
                         _pPC->setBlueValue(blueValue);
                     }
@@ -129,18 +129,18 @@ void vTreeLEDCmdProcessor::Loop()
                     if ( _pPC->IsMyOrBcast(address)){
                         oldAddress = _pPC->myAddr;
                         _pPC->setAddress(newAddress);
-                        sprintf(buffer,"OK: Address Changed from: 0x%02x: to 0x%02x\n",
+                        sprintf(buffer,"OK: Address Changed from: 0x%02x: to 0x%02x",
                         oldAddress,
                         newAddress
                         );
-                        _pHW->print(buffer);
+                        _pHW->println(buffer);
                     }
                 } else {
-                    _pHW->print("Fail:setAddress requires exactly 2 arguments: oldAddress(bCast ok) + newAddress\n");
+                    _pHW->println("Fail:setAddress requires exactly 2 arguments: oldAddress(bCast ok) + newAddress");
                 }
             } else {
-                sprintf(buffer,"Fail:This is an Invalid Cmd:%s\n",pCmd);
-                _pHW->print(buffer);
+                sprintf(buffer,"Fail:This is an Invalid Cmd:%s",pCmd);
+                _pHW->println(buffer);
             }       
         resetCmd();
     }

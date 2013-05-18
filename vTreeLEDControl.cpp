@@ -43,19 +43,19 @@ void vTreeLEDControl::setAddress(uint8_t address){
 }
 void vTreeLEDControl::setRedValue(int value){
     //int redValue = -1;
-    //redValue = value;
+    redValue = value;
     analogWrite(vTreeLEDControl::redPin, value);
 }
 
 void vTreeLEDControl::setGreenValue(int value){
     //int greenValue = -1;
-    //greenValue = value;
+    greenValue = value;
     analogWrite(vTreeLEDControl::greenPin, value);
 }
 
 void vTreeLEDControl::setBlueValue(int value){
     //int blueValue = -1;
-    //blueValue = value;
+    blueValue = value;
     analogWrite(vTreeLEDControl::bluePin, value);
 }
 

@@ -77,7 +77,7 @@ bool CmdProcessor::checkCommands()
                 processCmd();
                 return 1;
             } else {
-                _pHW->print("Ok\n");
+                _pHW->println("Ok");
             }
         } else {
             _pCmdString[_cmdPos++] = c;
