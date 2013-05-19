@@ -2,6 +2,7 @@
 #include <Stream.h>
 #include <stdio.h>
 #include "vTreeLEDCmdProcessor.h"
+#include "vTreeLEDControl.h"
 #include <EEPROM.h>
 
 vTreeLEDControl pctrl = vTreeLEDControl();
@@ -13,7 +14,6 @@ int loopCtr = 0;
 
 uint8_t u_addr = 0;
 
-HardwareSerial Uart = HardwareSerial();
 
 // Timeout handling
 long oneSecondInterval = 1000;
@@ -49,12 +49,15 @@ void setup() {
         EEPROM.write(0,u_addr);
     }
 
-    //Serial.begin(9600);
-    Uart.begin(9600);
+// Serial1 is the uart that talks to the xBee we could talk directly
+// to the program by just using Serial for debug purposes so we don't have to
+// hook up two teensy modules
+
+    Serial.begin(9600);
 
     //Serial.setTimeout(1000);
     //cmdProc.setSerial(Serial);
-    cmdProc.setSerial(Uart);
+    cmdProc.setSerial(Serial);
     
 	pinMode(statusLed,OUTPUT);
 }
