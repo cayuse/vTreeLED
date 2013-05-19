@@ -22,18 +22,18 @@ void vTreeLEDControl::setup(){
     //But basically its intended that the math will always look at the RGB values and then calculate a level
     //shifted intensity downward from there. At 255 it would be those exact values.
     // This is intended for later with higher bit PWMing
-    intensityValue = 255;
+    intensityValue = 0;
     
     // Configure Pins
     // And write their initial state.
   pinMode(vTreeLEDControl::redPin,OUTPUT);
-  analogWrite(vTreeLEDControl::redPin, vTreeLEDControl::redValue);
+  analogWrite(vTreeLEDControl::redPin, 255 - vTreeLEDControl::redValue);
 
   pinMode(vTreeLEDControl::greenPin,OUTPUT);
-  analogWrite(vTreeLEDControl::greenPin, vTreeLEDControl::greenValue);
+  analogWrite(vTreeLEDControl::greenPin, 255 - vTreeLEDControl::greenValue);
 
   pinMode(vTreeLEDControl::bluePin,OUTPUT);
-  analogWrite(vTreeLEDControl::bluePin, vTreeLEDControl::blueValue);
+  analogWrite(vTreeLEDControl::bluePin, 255 - vTreeLEDControl::blueValue);
 
 }
 
@@ -44,21 +44,18 @@ void vTreeLEDControl::setAddress(uint8_t address){
     EEPROM.write(0,address);
 }
 void vTreeLEDControl::setRedValue(int value){
-    //int redValue = -1;
     vTreeLEDControl::redValue = value;
-    analogWrite(vTreeLEDControl::redPin, value);
+    analogWrite(vTreeLEDControl::redPin, 255 - value);
 }
 
 void vTreeLEDControl::setGreenValue(int value){
-    //int greenValue = -1;
     vTreeLEDControl::greenValue = value;
-    analogWrite(vTreeLEDControl::greenPin, value);
+    analogWrite(vTreeLEDControl::greenPin, 255 - value);
 }
 
 void vTreeLEDControl::setBlueValue(int value){
-    //int blueValue = -1;
     vTreeLEDControl::blueValue = value;
-    analogWrite(vTreeLEDControl::bluePin, value);
+    analogWrite(vTreeLEDControl::bluePin, 255 - value);
 }
 
 bool vTreeLEDControl::IsMyAddress(uint8_t address) {
