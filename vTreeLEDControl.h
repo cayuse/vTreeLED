@@ -7,9 +7,9 @@ class vTreeLEDControl
 {
 public:
 
-    static const int redPin = 12;
+    static const int redPin = 14;
     static const int greenPin = 15;
-    static const int bluePin = 14;
+    static const int bluePin = 12;
 
     uint8_t  myAddr;
 
