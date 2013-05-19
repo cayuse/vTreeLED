@@ -11,10 +11,6 @@ int statusLed = 11;
 int errorLed = 11;
 int loopCtr = 0;
 
-uint8_t u_addr = 0;
-
-HardwareSerial Uart = HardwareSerial();
-
 // Timeout handling
 long oneSecondInterval = 1000;
 long oneSecondCounter = 0;
@@ -43,20 +39,20 @@ void setup() {
 // Since we don't know what is in the eeprom, we just want to make sure that we aren't.
 // required to use the broadcast address to talk to the thing, so we set it to 255 if its 0.
 
-    u_addr = EEPROM.read(0);
-    if (u_addr == 0) {
-        u_addr = 255;
-        EEPROM.write(0,u_addr);
+    int address = EEPROM.read(0);
+    if (address == 0) {
+        address = 255;
+        EEPROM.write(0,address);
     }
 
-    //Serial.begin(9600);
-    Uart.begin(9600);
+    Serial.begin(9600);
+    //Uart.begin(9600);
 
-    //Serial.setTimeout(1000);
-    //cmdProc.setSerial(Serial);
-    cmdProc.setSerial(Uart);
+    Serial.setTimeout(1000);
+    cmdProc.setSerial(Serial);
     
 	pinMode(statusLed,OUTPUT);
+	uint8_t u_addr = EEPROM.read(0);
 }
 
 void toggleLed()
