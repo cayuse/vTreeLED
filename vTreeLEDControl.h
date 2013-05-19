@@ -1,6 +1,8 @@
 #ifndef vTreeLEDCTRL_H
 #define vTreeLEDCTRL_H
 
+#include "CmdProcessor.h"
+
 class vTreeLEDControl
 {
 public:
