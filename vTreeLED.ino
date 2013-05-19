@@ -59,6 +59,7 @@ void setup() {
     cmdProc.setSerial(Serial);
     
 	pinMode(statusLed,OUTPUT);
+	pctrl.setup();
 }
 
 void toggleLed()

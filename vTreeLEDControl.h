@@ -37,7 +37,7 @@ public:
 // mode 5:  same as above with synchronisation inputs
 // mode 6:  light is doing some algorithmic shifting
 // mode 7:  same as above with synchronization inputs
-
+	void setup();
     void Loop(); // Call periodically, about once a second
 
     void setAddress(uint8_t address);

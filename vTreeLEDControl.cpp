@@ -6,7 +6,9 @@
 	
 */
 vTreeLEDControl::vTreeLEDControl() {
+}
 
+void vTreeLEDControl::setup(){
     // Initialize this in the constructor of the class.
     vTreeLEDControl::myAddr = 0;
     vTreeLEDControl::myAddr = EEPROM.read(0);
