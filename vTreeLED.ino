@@ -2,7 +2,6 @@
 #include <Stream.h>
 #include <stdio.h>
 #include "vTreeLEDCmdProcessor.h"
-#include "vTreeLEDControl.h"
 #include <EEPROM.h>
 
 vTreeLEDControl pctrl = vTreeLEDControl();
