@@ -30,12 +30,12 @@ void vTreeLEDCmdProcessor::Loop()
 //This command responds always and with the following information. It should also include address.
 //But i have to go so I can't do that right atm.
             if (strcmp(pCmd,"status") == 0) {
-                  sprintf(buffer,"Ok:Address: %d Red:%d Green:%d Blue:%d Intensity:%d",
+                  sprintf(buffer,"Ok:Address: %d Red:%d Yellow:%d Green:%d Blue:%d",
                     _pPC->myAddr,
                     _pPC->redValue,
+                    _pPC->yellowValue,
                     _pPC->greenValue,
-                    _pPC->blueValue,
-                    _pPC->intensityValue
+                    _pPC->blueValue
                     );
                 _pHW->println(buffer);
 
@@ -45,23 +45,26 @@ void vTreeLEDCmdProcessor::Loop()
 // This command does not talk back.
 // TODO get rid of the talking back on the ELSE
 
-            } else if(strcmp(pCmd,"setRGB") == 0) {
+            } else if(strcmp(pCmd,"setRYGB") == 0) {
                 uint8_t address = 0;
                 int redValue = -1;
+                int yellowValue = -1;
                 int greenValue = -1;
                 int blueValue = -1;
-                if (paramCnt() > 3) {
+                if (paramCnt() > 4) {
                     getParam(0,address);
                     getParam(1,redValue);
-                    getParam(2,greenValue);
-                    getParam(3,blueValue);
+                    getParam(2,yellowValue);
+                    getParam(3,greenValue);
+                    getParam(4,blueValue);
                     if ( _pPC->IsMyOrBcast(address)){
                         _pPC->setRedValue(redValue);
+                        _pPC->setYellowValue(yellowValue);
                         _pPC->setGreenValue(greenValue);
                         _pPC->setBlueValue(blueValue);
                     }
                 } else {
-                    _pHW->println("Fail:setRGB Requires an address plus 3 values 0-255");
+                    _pHW->println("Fail:setRYGB Requires an address plus 4 values 0-255");
                 }
 // This command sets Red value
 // This command is accepted by address or broadcast.
@@ -77,6 +80,24 @@ void vTreeLEDCmdProcessor::Loop()
                     getParam(1,redValue);
                     if ( _pPC->IsMyOrBcast(address)){
                         _pPC->setRedValue(redValue);
+                    }
+                } else {
+                    //_pHW->print("Fail:\n");
+                }
+// This command sets Red value
+// This command is accepted by address or broadcast.
+// This command should have a short command name.
+// This command does not talk back.
+
+
+            } else if(strcmp(pCmd,"setYellow") == 0) {
+                uint8_t address = 0;
+                int yellowValue = -1;
+                if (paramCnt() == 2) {
+                    getParam(0,address);
+                    getParam(1,yellowValue);
+                    if ( _pPC->IsMyOrBcast(address)){
+                        _pPC->setYellowValue(yellowValue);
                     }
                 } else {
                     //_pHW->print("Fail:\n");

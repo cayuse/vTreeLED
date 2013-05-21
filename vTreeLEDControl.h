@@ -7,19 +7,17 @@ class vTreeLEDControl
 {
 public:
 
-    static const int redPin = 12;
-    static const int greenPin = 15;
+    static const int redPin = 10;
+    static const int yellowPin = 9;
+    static const int greenPin = 12;
     static const int bluePin = 14;
 
     uint8_t  myAddr;
 
-    // We will eventually need a pin for reading the IR.
-//    static const int IRPin = 2;
-
     int redValue;
+    int yellowValue;
     int greenValue;
     int blueValue;
-    int intensityValue;
 
 
 
@@ -42,6 +40,7 @@ public:
 
     void setAddress(uint8_t address);
     void setRedValue(int value);
+    void setYellowValue(int value);
     void setGreenValue(int value);
     void setBlueValue(int value);
 

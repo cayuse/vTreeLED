@@ -15,6 +15,7 @@ void vTreeLEDControl::setup(){
 
     //May as well have it start fully on.
     vTreeLEDControl::redValue = 255;
+    vTreeLEDControl::yellowValue = 255;
     vTreeLEDControl::greenValue = 255;
     vTreeLEDControl::blueValue = 255;
     // Intensity value may be used later to allow for scalaing back off the initial values without changing the
@@ -22,13 +23,15 @@ void vTreeLEDControl::setup(){
     //But basically its intended that the math will always look at the RGB values and then calculate a level
     //shifted intensity downward from there. At 255 it would be those exact values.
     // This is intended for later with higher bit PWMing
-    intensityValue = 0;
     
     // Configure Pins
     // And write their initial state.
   pinMode(vTreeLEDControl::redPin,OUTPUT);
   analogWrite(vTreeLEDControl::redPin, 255 - vTreeLEDControl::redValue);
-
+  
+  pinMode(vTreeLEDControl::yellowPin,OUTPUT);
+  analogWrite(vTreeLEDControl::yellowPin, 255 - vTreeLEDControl::yellowValue);
+  
   pinMode(vTreeLEDControl::greenPin,OUTPUT);
   analogWrite(vTreeLEDControl::greenPin, 255 - vTreeLEDControl::greenValue);
 
@@ -46,6 +49,11 @@ void vTreeLEDControl::setAddress(uint8_t address){
 void vTreeLEDControl::setRedValue(int value){
     vTreeLEDControl::redValue = value;
     analogWrite(vTreeLEDControl::redPin, 255 - value);
+}
+
+void vTreeLEDControl::setYellowValue(int value){
+    vTreeLEDControl::yellowValue = value;
+    analogWrite(vTreeLEDControl::yellowPin, 255 - value);
 }
 
 void vTreeLEDControl::setGreenValue(int value){

@@ -52,7 +52,7 @@ void setup() {
 // to the program by just using Serial for debug purposes so we don't have to
 // hook up two teensy modules
 
-    Serial.begin(9600);
+    Serial.begin(384000);
 
     //Serial.setTimeout(1000);
     //cmdProc.setSerial(Serial);
