@@ -61,7 +61,7 @@ void vTreeLEDControl::setBlue(uint8_t intensity){
 
     blue = intensity;
     width = (intensity * brightness) >> PWM_SHIFT;
-    SetPWM1A(width);
+    SetPWM1C(width);
 }
 
 void vTreeLEDControl::setBrightness(uint8_t bright)

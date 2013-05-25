@@ -52,7 +52,7 @@ void setup() {
 // to the program by just using Serial for debug purposes so we don't have to
 // hook up two teensy modules
 
-    Serial.begin(9600);
+    Serial.begin(38400);
 
     //Serial.setTimeout(1000);
     //cmdProc.setSerial(Serial);
@@ -64,13 +64,14 @@ void setup() {
 
 void toggleLed()
 {
-  // blink
-  if (ledCounter % 2) {
-    digitalWrite(statusLed, HIGH);
-  } else {
-    digitalWrite(statusLed, LOW);
-  }
-  ledCounter++;
+    // blink
+    if (ledCounter % 2) {
+        digitalWrite(statusLed, HIGH);
+    } else {
+        digitalWrite(statusLed, LOW);
+    }
+
+    ledCounter++;
 }  
 
 

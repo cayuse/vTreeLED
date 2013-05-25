@@ -12,6 +12,7 @@ vTreeLEDCmdProcessor::vTreeLEDCmdProcessor(vTreeLEDControl* pc) : CmdProcessor()
 
 vTreeLEDCmdProcessor::~vTreeLEDCmdProcessor()
 {
+
 }
 
 
@@ -134,7 +135,7 @@ void vTreeLEDCmdProcessor::Loop()
 
         // Set overall brightness
 
-        else if (strcmp(pCmd,"Bright") == 0) {
+        else if (strcmp(pCmd,"bright") == 0) {
             uint8_t address;
             uint8_t bright;
 
