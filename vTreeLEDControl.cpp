@@ -3,15 +3,26 @@
 #include "vTreeLEDControl.h"
 #include "T1PWM.h"
 
-#define BROADCAST_ID 0
-#define INIT_ID      255
+
+#define BROADCAST_ID 0x00
+//ID_STORE is a EEProm memory locaton
+#define ID_STORE     0x00
+#define INIT_ID      0xFF
 #define PWM_PERIOD   0x3FFF
 #define PWM_SHIFT    2
 
 vTreeLEDControl::vTreeLEDControl() {
+
+    // Check and initialize if necessary the eeProm since we don't know what was there.
+    // Since we don't know what is in the eeprom, we just want to make sure...
+    // its not BROADCAST_ID if so we set it to INIT_ID
     //Initialize Unit ID
     unitID = 0;
-    unitID = EEPROM.read(0);
+    unitID = EEPROM.read(ID_STORE);
+    if (unitID == BROADCAST_ID) {
+        unitID = INIT_ID;
+        EEPROM.write(ID_STORE,u_addr);
+    }
     //Initialize Group ID
     groupID = unitID;
 }

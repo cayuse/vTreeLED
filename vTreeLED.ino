@@ -11,8 +11,6 @@ int statusLed = 11;
 int errorLed = 11;
 int loopCtr = 0;
 
-uint8_t u_addr = 0;
-
 
 // Timeout handling
 long oneSecondInterval = 1000;
@@ -37,16 +35,6 @@ void flashLed(int pin, int times, int wait) {
 // ------------------ S E T U P ----------------------------------------------
 
 void setup() {
-
-// Check and initialize if necessary the eeProm since we don't know what was there.
-// Since we don't know what is in the eeprom, we just want to make sure that we aren't.
-// required to use the broadcast address to talk to the thing, so we set it to 255 if its 0.
-
-    u_addr = EEPROM.read(0);
-    if (u_addr == 0) {
-        u_addr = 255;
-        EEPROM.write(0,u_addr);
-    }
 
 // Serial1 is the uart that talks to the xBee we could talk directly
 // to the program by just using Serial for debug purposes so we don't have to
