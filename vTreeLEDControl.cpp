@@ -21,7 +21,7 @@ vTreeLEDControl::vTreeLEDControl() {
     unitID = EEPROM.read(ID_STORE);
     if (unitID == BROADCAST_ID) {
         unitID = INIT_ID;
-        EEPROM.write(ID_STORE,u_addr);
+        EEPROM.write(ID_STORE,unitID);
     }
     //Initialize Group ID
     groupID = unitID;
