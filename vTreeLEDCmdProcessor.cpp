@@ -171,6 +171,14 @@ void vTreeLEDCmdProcessor::Loop()
 //              _pHW->println("Fail:setAddress requires exactly 2 arguments: oldAddress(bCast ok) + newAddress");
             }
         }
+
+        // This command clears all temporary Group IDs
+        // This command is always broadcast, and therefore takes no address param
+        // This command does not talk back.
+
+        else if (strcmp(pCmd,"CGID") == 0) {
+            _pPC->resetGroupID();
+        }
         
         // This command sets the programmable Unit ID
         // This command is accepted by address or broadcast.
