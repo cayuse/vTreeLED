@@ -32,8 +32,9 @@ void vTreeLEDCmdProcessor::Loop()
         // But i have to go so I can't do that right atm.
 
         if (strcmp(pCmd,"status") == 0) {
-            sprintf(buffer,"Status: Addr=%02X Red=%u Green=%u Blue=%u Bright=%u",
-                    _pPC->myAddress,
+            sprintf(buffer,"Status: UID=%02X GID=%20X Red=%u Green=%u Blue=%u Bright=%u",
+                    _pPC->unitID,
+                    _pPC->groupID,
                     _pPC->red,
                     _pPC->green,
                     _pPC->blue,
@@ -43,7 +44,7 @@ void vTreeLEDCmdProcessor::Loop()
         }
 
         // This command sets RGB values for lights
-        // This command is accepted by address or broadcast.
+        // This command is accepted by UID,GID or broadcast.
         // This command should have a short command name.
         // This command does not talk back.
         // TODO get rid of the talking back on the ELSE
@@ -59,7 +60,7 @@ void vTreeLEDCmdProcessor::Loop()
                 getParam(1, red);
                 getParam(2, green);
                 getParam(3, blue);
-                if (_pPC->IsMyOrBcast(address)) {
+                if (_pPC->isAny(address)) {
                     _pPC->setRed(red);
                     _pPC->setGreen(green);
                     _pPC->setBlue(blue);
@@ -71,7 +72,7 @@ void vTreeLEDCmdProcessor::Loop()
         }
 
         // This command sets Red value
-        // This command is accepted by address or broadcast.
+        // This command is accepted by UID,GID or broadcast.
         // This command should have a short command name.
         // This command does not talk back.
 
@@ -82,7 +83,7 @@ void vTreeLEDCmdProcessor::Loop()
             if (paramCnt() == 2) {
                 getParam(0, address);
                 getParam(1, red);
-                if (_pPC->IsMyOrBcast(address)) {
+                if (_pPC->isAny(address)) {
                    _pPC->setRed(red);
                 }
             }
@@ -92,7 +93,7 @@ void vTreeLEDCmdProcessor::Loop()
         }
 
         // This command sets Green value
-        // This command is accepted by address or broadcast.
+        // This command is accepted by UID,GID or broadcast.
         // This command should have a short command name.
         // This command does not talk back.
 
@@ -103,7 +104,7 @@ void vTreeLEDCmdProcessor::Loop()
             if (paramCnt() == 2) {
                 getParam(0, address);
                 getParam(1, green);
-                if (_pPC->IsMyOrBcast(address)) {
+                if (_pPC->isAny(address)) {
                     _pPC->setGreen(green);
                 }
             }
@@ -113,7 +114,7 @@ void vTreeLEDCmdProcessor::Loop()
         }
 
         // This command sets Blue value
-        // This command is accepted by address or broadcast.
+        // This command is accepted by UID,GID or broadcast.
         // This command should have a short command name.
         // This command does not talk back.
 
@@ -124,7 +125,7 @@ void vTreeLEDCmdProcessor::Loop()
             if (paramCnt() == 2) {
                 getParam(0, address);
                 getParam(1, blue);
-                if (_pPC->IsMyOrBcast(address)) {
+                if (_pPC->isAny(address)) {
                     _pPC->setBlue(blue);
                 }
             }
@@ -142,7 +143,7 @@ void vTreeLEDCmdProcessor::Loop()
             if (paramCnt() == 2) {
                 getParam(0, address);
                 getParam(1, bright);
-                if (_pPC->IsMyOrBcast(address)) {
+                if (_pPC->isAny(address)) {
                     _pPC->setBrightness(bright);
                 }
             }
@@ -151,12 +152,34 @@ void vTreeLEDCmdProcessor::Loop()
             }
         }
 
-        // This command sets the programmable Address
+        // This command sets the temporary Group ID
+        // This command is accepted by address only.
+        // This command does not talk back.
+
+        else if (strcmp(pCmd,"GID") == 0) {
+            uint8_t address;
+            uint8_t newAddress;
+
+            if (paramCnt() == 2) {
+                getParam(0, address);
+                getParam(1, newAddress);
+                if (_pPC->isUnit(address)) {
+                    _pPC->setGroupID(newAddress);
+                }
+            }
+            else {
+//              _pHW->println("Fail:setAddress requires exactly 2 arguments: oldAddress(bCast ok) + newAddress");
+            }
+        }
+        
+        // This command sets the programmable Unit ID
         // This command is accepted by address or broadcast.
         // This command does not require a short command name.
         // This command talks back on success or failure.
+        // This command has an intentionally long name to
+        //      prevent mixing up with the "GID" command.
 
-        else if (strcmp(pCmd,"Addr") == 0) {
+        else if (strcmp(pCmd,"set_unit_id") == 0) {
             uint8_t oldAddress;
             uint8_t address;
             uint8_t newAddress;
@@ -164,10 +187,10 @@ void vTreeLEDCmdProcessor::Loop()
             if (paramCnt() == 2) {
                 getParam(0, address);
                 getParam(1, newAddress);
-                if (_pPC->IsMyOrBcast(address)) {
-                    oldAddress = _pPC->myAddress;
-                    _pPC->setAddress(newAddress);
-                    sprintf(buffer,"Address change, old:%02X new:%02X",
+                if (_pPC->isUnitOrBcast(address)) {
+                    oldAddress = _pPC->unitID;
+                    _pPC->setUnitID(newAddress);
+                    sprintf(buffer,"Unit ID changed, old:%02X new:%02X",
                             oldAddress,
                             newAddress
                     );

@@ -3,10 +3,12 @@
 
 #include "CmdProcessor.h"
 
+
 class vTreeLEDControl
 {
 public:
-    uint8_t myAddress;
+    uint8_t unitID;
+    uint8_t groupID;
 
     uint8_t red;
     uint8_t green;
@@ -18,15 +20,19 @@ public:
     ~vTreeLEDControl();
 	void setup();
 
-    void setAddress(uint8_t address);
+    void setUnitID(uint8_t id);
+    void setGroupID(uint8_t id);
+    void resetGroupID(void);
     void setRed(uint8_t intensity);
     void setGreen(uint8_t intensity);
     void setBlue(uint8_t intensity);
     void setBrightness(uint8_t bright);
 
-    bool IsMyAddress(uint8_t address);
-    bool IsBcastAddress(uint8_t address);
-    bool IsMyOrBcast(uint8_t address);
+    bool isUnit(uint8_t id);
+    bool isGroup(uint8_t id);
+    bool isBcast(uint8_t id);
+    bool isUnitOrBcast(uint8_t id);
+    bool isAny(uint8_t id);
 };
 
 /*

@@ -3,24 +3,28 @@
 #include "vTreeLEDControl.h"
 #include "T1PWM.h"
 
+#define BROADCAST_ID 0
+#define INIT_ID      255
 #define PWM_PERIOD   0x3FFF
 #define PWM_SHIFT    2
 
 vTreeLEDControl::vTreeLEDControl() {
+    //Initialize Unit ID
+    unitID = 0;
+    unitID = EEPROM.read(0);
+    //Initialize Group ID
+    groupID = unitID;
 }
 
 void vTreeLEDControl::setup() {
-    // Initialize this in the constructor of the class.
 
-    myAddress = 0;
-//  myAddress = EEPROM.read(0);
-
-    // Start with everything off
+    // Start with everything on (half)
+    // Why the hell would you plug in a light and not expect it to come on?
 
     brightness = 0xFF;
-    red = 0;
-    green = 0;
-    blue = 0;
+    red = 0x80;
+    green = 0x80;
+    blue = 0x80;
 
     // Initialize timer for high resolution fast PWM mode
     // Configure PWM period
@@ -35,9 +39,17 @@ void vTreeLEDControl::setup() {
 
 vTreeLEDControl::~vTreeLEDControl() {}
 
-void vTreeLEDControl::setAddress(uint8_t address){
-    myAddress = address;
-    EEPROM.write(0, address);
+void vTreeLEDControl::setUnitID(uint8_t id){
+    unitID = id;
+    EEPROM.write(0, id);
+}
+
+void vTreeLEDControl::setGroupID(uint8_t id){
+    groupID = groupID;
+}
+
+void vTreeLEDControl::resetGroupID(void) {
+    groupID = unitID;
 }
 
 void vTreeLEDControl::setRed(uint8_t intensity){
@@ -72,14 +84,22 @@ void vTreeLEDControl::setBrightness(uint8_t bright)
     setBlue(blue);
 }
 
-bool vTreeLEDControl::IsMyAddress(uint8_t address) {
-    return(address == myAddress);
+bool vTreeLEDControl::isUnit(uint8_t id) {
+    return(id == unitID);
 }
 
-bool vTreeLEDControl::IsBcastAddress(uint8_t address){
-    return(address == 0);
+bool vTreeLEDControl::isGroup(uint8_t id){
+    return(groupID == id);
 }
 
-bool vTreeLEDControl::IsMyOrBcast(uint8_t address){
-    return(IsMyAddress(address) || IsBcastAddress(address));
+bool vTreeLEDControl::isBcast(uint8_t id){
+    return(id == BROADCAST_ID);
+}
+
+bool vTreeLEDControl::isUnitOrBcast(uint8_t id){
+    return(isUnit(id) || isBcast(id));
+}
+
+bool vTreeLEDControl::isAny(uint8_t id){
+    return(isBcast(id) || isGroup(id) || isUnit(id));
 }
