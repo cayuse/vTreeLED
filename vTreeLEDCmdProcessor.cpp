@@ -32,7 +32,7 @@ void vTreeLEDCmdProcessor::Loop()
         // But i have to go so I can't do that right atm.
 
         if (strcmp(pCmd,"status") == 0) {
-            sprintf(buffer,"Status: UID=%02X GID=%20X Red=%u Green=%u Blue=%u Bright=%u",
+            sprintf(buffer,"Status: UID=%02X GID=%02X Red=%u Green=%u Blue=%u Bright=%u",
                     _pPC->unitID,
                     _pPC->groupID,
                     _pPC->red,

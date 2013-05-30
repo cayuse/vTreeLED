@@ -56,7 +56,7 @@ void vTreeLEDControl::setUnitID(uint8_t id){
 }
 
 void vTreeLEDControl::setGroupID(uint8_t id){
-    groupID = groupID;
+    groupID = id;
 }
 
 void vTreeLEDControl::resetGroupID(void) {
